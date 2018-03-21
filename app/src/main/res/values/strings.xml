@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MySpeechRecognitionTest</string>
+    <string name="app_id">5ab07df0</string>
+
+    <string name="speech_recognition">语音识别</string>
+    <string name="start_speech">开始说话</string>
+    <string name="stop_speech">停止说话</string>
+</resources>
