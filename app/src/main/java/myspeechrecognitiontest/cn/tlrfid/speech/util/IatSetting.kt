@@ -26,6 +26,6 @@ class IatSetting : PreferenceActivity(), Preference.OnPreferenceChangeListener {
     override fun onPreferenceChange(preference: Preference?, newValue: Any?) = true
 
     companion object {
-        const val PREFER_NAME = "myspeechrecognitiontest.cn.tlrfid.speech.util.setting"
+        const val PREFER_NAME = "myspeechrecognitiontest.cn.tlrfid.speech.util"
     }
 }

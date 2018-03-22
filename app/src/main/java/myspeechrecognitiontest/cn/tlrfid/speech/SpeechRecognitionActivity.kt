@@ -27,7 +27,7 @@ class SpeechRecognitionActivity : BaseActivity(), View.OnClickListener {
     //创建语音听写UI
     private var mSRADialog: RecognizerDialog? = null
     //存储听写的结果采用HashMap
-    private var mSRAResults = HashMap<String, String>()
+    private var mSRAResults = LinkedHashMap<String, String>()
 
     var ret = 0
     private var mSharedPreferences: SharedPreferences? = null
@@ -53,6 +53,7 @@ class SpeechRecognitionActivity : BaseActivity(), View.OnClickListener {
         start_speech.setOnClickListener(this)
         stop_speech.setOnClickListener(this)
         mSRA = SpeechRecognizer.createRecognizer(this, mInitListener)
+        mSRADialog = RecognizerDialog(this, mInitListener)
         mSharedPreferences = getSharedPreferences(IatSetting.PREFER_NAME, Activity.MODE_PRIVATE)
     }
 
@@ -63,15 +64,16 @@ class SpeechRecognitionActivity : BaseActivity(), View.OnClickListener {
         }
         when (v?.id) {
             R.id.start_speech -> {
-                FlowerCollector.onEvent(this, "start_speech")
+                FlowerCollector.onEvent(this, "iat_recognize")
                 your_speech_word.text = null
                 mSRAResults.clear()
                 setParam()
                 val isShowDialog = mSharedPreferences?.getBoolean(getString(R.string.pref_key_iat_show), true)
+                showTip("" + isShowDialog)
                 when (isShowDialog) {
                     true -> {
                         mSRADialog?.setListener(mRecognizerDialogListener)
-                        mSRADialog?.show()
+                        mSRADialog!!.show()
                         showTip(getString(R.string.text_begin))
                     }
                     false -> {
@@ -140,7 +142,7 @@ class SpeechRecognitionActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-    private var mRecognizerDialogListener = object : RecognizerDialogListener {
+     var mRecognizerDialogListener = object : RecognizerDialogListener {
         override fun onResult(results: RecognizerResult, isLast: Boolean) {
             if (mTranslateEnable) {
                 printTransResult(results)
@@ -237,7 +239,7 @@ class SpeechRecognitionActivity : BaseActivity(), View.OnClickListener {
             e.printStackTrace()
         }
 
-        mSRAResults[sn!!]= text
+        mSRAResults[sn!!] = text
 
         val resultBuffer = StringBuffer()
         for (key in mSRAResults.keys) {

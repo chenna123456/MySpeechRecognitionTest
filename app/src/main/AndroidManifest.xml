@@ -45,6 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SpeechRecognitionActivity" />
+        <activity android:name=".SpeechRecognitionActivity1" />
         <activity android:name=".util.IatSetting" />
     </application>
 
